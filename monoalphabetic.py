@@ -17,5 +17,3 @@ for i in p:
     e = a.index(i)
     c = c+b[e]
 print("Cipher Text : "+c)
-
-for print dslkhhklhfl
