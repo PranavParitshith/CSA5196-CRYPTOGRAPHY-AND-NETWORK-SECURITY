@@ -1,102 +1,68 @@
-key = input("Enter key: ")
-key = key.replace(" ", "")
-key = key.upper()
+key1 = input("Enter the Key : ")
+k = [['0','0','0','0','0'],['0','0','0','0','0'],['0','0','0','0','0'],['0','0','0','0','0'],['0','0','0','0','0']]
+l = 0
+key = []
+for i in key1:
+    if i not in key:
+        key.append(i)
 
+for i in a:
+    if i not in key:
+        key.append(i)
+        
+for i in range(0,5):
+    for j in range(0,5):
+        if l < len(key):
+            k[i][j] = key[l]
+            l = l + 1
+print(k)
+p = input("Enter the Plain Text : ")
 
-def matrix(x, y, initial):
-    return [[initial for i in range(x)] for j in range(y)]
+o = []
+h = 88
+for i in p:
+    o.append(i)
+i = 0
+l = len(o)
+while i < len(o)-1:
+    if o[i] == o[i+1] and i%2 == 0:
+        o.insert(i+1,chr(h))
+        h = h + 1
+        break
+    i = i + 1
+p = ""
+for i in o:
+    p = p+i
+    
+if len(p)%2 != 0:
+    p = p + 'X'
+pairs = [p[i:i+2] for i in range(0,len(p),2)]
+print(pairs)
+c = ""
+for pair in pairs:
+    positions = []
+    for m in pair:
+        for e, row in enumerate(k):
+            for j, col in enumerate(row):
+                if col == m:
+                    positions.append((e, j))
+    print(positions)
 
-
-result = list()
-for c in key:  # storing key
-    if c not in result:
-        if c == 'J':
-            result.append('I')
-        else:
-            result.append(c)
-flag = 0
-for i in range(65, 91):  # storing other character
-    if chr(i) not in result:
-        if i == 73 and chr(74) not in result:
-            result.append("I")
-            flag = 1
-        elif flag == 0 and i == 73 or i == 74:
-            pass
-        else:
-            result.append(chr(i))
-k = 0
-my_matrix = matrix(5, 5, 0)  # initialize matrix
-for i in range(0, 5):  # making matrix
-    for j in range(0, 5):
-        my_matrix[i][j] = result[k]
-        k += 1
-
-
-def locindex(c):  # get location of each character
-    loc = list()
-    if c == 'J':
-        c = 'I'
-    for i, j in enumerate(my_matrix):
-        for k, l in enumerate(j):
-            if c == l:
-                loc.append(i)
-                loc.append(k)
-                return loc
-
-
-def encrypt():  # Encryption
-    msg = str(input("ENTER MSG:"))
-    msg = msg.upper()
-    msg = msg.replace(" ", "")
-    i = 0
-    for s in range(0, len(msg) + 1, 2):
-        if s < len(msg) - 1:
-            if msg[s] == msg[s + 1]:
-                msg = msg[:s + 1] + 'X' + msg[s + 1:]
-    if len(msg) % 2 != 0:
-        msg = msg[:] + 'X'
-    print("CIPHER TEXT:", end=' ')
-    while i < len(msg):
-        loc = list()
-        loc = locindex(msg[i])
-        loc1 = list()
-        loc1 = locindex(msg[i + 1])
-        if loc[1] == loc1[1]:
-            print("{}{}".format(my_matrix[(loc[0] + 1) % 5][loc[1]], my_matrix[(loc1[0] + 1) % 5][loc1[1]]), end=' ')
-        elif loc[0] == loc1[0]:
-            print("{}{}".format(my_matrix[loc[0]][(loc[1] + 1) % 5], my_matrix[loc1[0]][(loc1[1] + 1) % 5]), end=' ')
-        else:
-            print("{}{}".format(my_matrix[loc[0]][loc1[1]], my_matrix[loc1[0]][loc[1]]), end=' ')
-        i = i + 2
-
-
-def decrypt():  # decryption
-    msg = str(input("ENTER CIPHER TEXT:"))
-    msg = msg.upper()
-    msg = msg.replace(" ", "")
-    print("PLAIN TEXT:", end=' ')
-    i = 0
-    while i < len(msg):
-        loc = list()
-        loc = locindex(msg[i])
-        loc1 = list()
-        loc1 = locindex(msg[i + 1])
-        if loc[1] == loc1[1]:
-            print("{}{}".format(my_matrix[(loc[0] - 1) % 5][loc[1]], my_matrix[(loc1[0] - 1) % 5][loc1[1]]), end=' ')
-        elif loc[0] == loc1[0]:
-            print("{}{}".format(my_matrix[loc[0]][(loc[1] - 1) % 5], my_matrix[loc1[0]][(loc1[1] - 1) % 5]), end=' ')
-        else:
-            print("{}{}".format(my_matrix[loc[0]][loc1[1]], my_matrix[loc1[0]][loc[1]]), end=' ')
-        i = i + 2
-
-
-while 1:
-    choice = int(input("\n 1.Encryption \n 2.Decryption: \n 3.EXIT \t: "))
-    if choice == 1:
-        encrypt()
-    elif choice == 2:
-        decrypt()
-    elif choice == 3:
-        exit()
+    if positions[0][0] == positions[1][0]:
+        print(positions[0][0],",",positions[1][0])
+        c += k[positions[0][0]][(positions[0][1] + 1) % 5]
+        c += k[positions[1][0]][(positions[1][1] + 1) % 5]
+    elif positions[0][1] == positions[1][1]:
+        print(positions[0][1],",",positions[1][1])
+        c += k[(positions[0][0] + 1) % 5][positions[0][1]]
+        c += k[(positions[1][0] + 1) % 5][positions[1][1]]
     else:
-        print("Choose correct choice")
+        c += k[positions[0][0]][positions[1][1]]
+        c += k[positions[1][0]][positions[0][1]]
+
+print("Encrypted Text:", c)
+        
+
+        
+
+
