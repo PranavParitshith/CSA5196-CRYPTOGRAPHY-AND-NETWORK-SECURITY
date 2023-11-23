@@ -1,7 +1,7 @@
 
 import math
 
-key = "HACK"
+key = "NEAT"
 
 def encryptMessage(msg):
 	cipher = ""
@@ -54,7 +54,7 @@ def decryptMessage(cipher):
 		return msg[: -null_count]
 
 	return msg
-msg = "Geeks for Geeks"
+msg = "Gandhiji"
 
 cipher = encryptMessage(msg)
 print("Encrypted Message: {}".
