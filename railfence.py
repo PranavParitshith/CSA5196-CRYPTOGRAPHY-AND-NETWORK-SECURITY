@@ -1,17 +1,19 @@
-depth = int(input("Enter the Depth: "))
-plaintext = input("Enter the Plain text: ")
-
-rails = ['' for _ in range(depth)]
-dir = 1  # 1 for down, -1 for up
+depth = int(input("Enter the Depth : "))
+p = input("Enter the plain text : ")
+l = len(p)
+a = [[0 for _ in range(l)] for _ in range(depth)]
+dir = 1
 row = 0
-
-for char in plaintext:
-    rails[row] += char
-    row += dir
-
-    # Change direction when reaching the top or bottom rail
-    if row == 0 or row == depth - 1:
-        dir *= -1
-
-ciphertext = ''.join(rails)
-print("Cipher: " + ciphertext)
+for j in range(l):    
+    a[row][j] = p[j]
+    row = row + dir
+    if row == depth-1 or row == 0:
+        dir = dir * -1
+c = ""
+for i in range(depth):
+    for j in range(l):
+        if a[i][j] == 0:
+            continue
+        else:
+            c = c + a[i][j]
+print("Cipher : ",c)
